@@ -12,7 +12,7 @@
 // match what the scorer's own buildDossier writes.
 
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-board.ts';
 import {
@@ -67,6 +67,11 @@ function imageSize(path: string): { width: number; height: number } | null {
 /** A dollar amount in whole dollars with commas. */
 const money = (n: number): string => `$${Math.round(n).toLocaleString('en-US')}`;
 
+/** Copy a directory tree to the output, skipping dotfiles: the grader's output walk refuses any path whose segment does not start with a letter, digit or underscore, so a dotfile such as screenshots/.gitkeep copied into /output fails the whole run even though the program itself exits 0. */
+function copyTree(src: string, dest: string): void {
+  cpSync(src, dest, { recursive: true, filter: (p) => !basename(p).startsWith('.') });
+}
+
 /** The whole build. */
 function main(): void {
   const inputDir = arg('input', 'MAKEFUN_INPUT_DIR', '/input');
@@ -84,9 +89,9 @@ function main(): void {
   const dashSrc = join(REPO, 'dashboard');
   const shotsSrc = join(REPO, 'screenshots');
   if (!existsSync(dashSrc)) throw new Error('dashboard/ is missing from the repository');
-  cpSync(dashSrc, join(outDir, 'dashboard'), { recursive: true });
+  copyTree(dashSrc, join(outDir, 'dashboard'));
   if (!existsSync(shotsSrc)) throw new Error('screenshots/ is missing from the repository');
-  cpSync(shotsSrc, join(outDir, 'screenshots'), { recursive: true });
+  copyTree(shotsSrc, join(outDir, 'screenshots'));
 
   // The screenshots the gate allows: 3 or 4, each a PNG or JPEG no larger than
   // 512 KiB, long side no more than 1440, short side at least 800.
