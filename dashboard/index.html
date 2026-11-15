@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — which pre-token protocol is worth farming next?</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="ping" aria-hidden="true"></span><span>TOKEN&nbsp;RADAR</span></div>
+  <p class="meta" id="meta">Loading the snapshot…</p>
+</header>
+<main>
+  <section class="hero">
+    <h1>Which pre-token protocol is worth farming next?</h1>
+    <p class="lede">Every protocol DefiLlama tracks, read once, scored once. The board keeps only
+    the protocols whose record carries <b>no token</b> — and that are not a wrapped, staked or
+    bridged product of a token that already trades. Each is ranked by its implied value:
+    a quarter of its TVL, adjusted for how fast it is growing, how long it has been live,
+    and how many chains it reaches. The farm plan under each row says what to do, what it
+    costs, and how long it takes.</p>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="spot" aria-label="Top ten">
+    <h2>Top ten by implied value</h2>
+    <div class="cards" id="spot"></div>
+  </section>
+
+  <section class="board" aria-label="Board">
+    <div class="tabs" role="tablist" aria-label="Board view">
+      <button id="tabPre" role="tab" aria-selected="true">Pre-token board</button>
+      <button id="tabLive" role="tab" aria-selected="false">Live token — set aside</button>
+    </div>
+    <div class="controls">
+      <label class="search">Search <input id="q" type="search" placeholder="protocol name or slug" autocomplete="off"></label>
+      <label>Category <select id="cat"><option value="">All categories</option></select></label>
+      <label>Chain <select id="chain"><option value="">All chains</option></select></label>
+      <label>Scope <select id="scope">
+        <option value="all">All 197 rows</option>
+        <option value="watch">Watchlist only</option>
+        <option value="beyond">Beyond the watchlist</option>
+      </select></label>
+    </div>
+    <p class="count" id="count"></p>
+    <div class="tablewrap">
+      <table id="board">
+        <thead><tr>
+          <th data-sort="rank">#</th>
+          <th data-sort="name">Protocol</th>
+          <th data-sort="tvl_usd">TVL</th>
+          <th data-sort="change_7d">7d</th>
+          <th data-sort="age_days">Age</th>
+          <th data-sort="chains">Chains</th>
+          <th data-sort="implied_value_usd">Implied value</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <table id="live" hidden>
+        <thead><tr>
+          <th>#</th><th>Protocol</th><th>TVL</th><th>7d</th><th>Market cap</th><th>Chains</th>
+        </tr></thead>
+        <tbody id="liveRows"></tbody>
+      </table>
+    </div>
+    <p class="hint">Click a row for its model breakdown and farm plan. Columns sort on click.</p>
+  </section>
+
+  <section class="method" id="method">
+    <h2>How the radar works</h2>
+    <div class="method-grid">
+      <div>
+        <h3>The value model — radar-2</h3>
+        <p class="formula">implied = TVL × 0.25 × (1 + clamp(7d, −60, +120) ÷ 100 × 0.5) × (0.6 + min(age, 1095) ÷ 1095 × 0.4) × (1 + 0.02 × min(chains, 5))</p>
+        <p>Four figures, all from the snapshot. A quarter of TVL is the base: that is the
+        size of the protocol that would have to be rewarded. Growth adds up to +60% or
+        takes away up to 30%. Age adds up to +40% for a protocol that has survived three
+        years. Each extra chain adds 2%, capped at +10%. No protocol name is ever
+        special-cased — the same function scores every row, and the detail view shows
+        each factor for the protocol you are looking at.</p>
+      </div>
+      <div>
+        <h3>Who counts as pre-token</h3>
+        <p>A protocol is on this board only when its record carries no token at all —
+        no market cap, no CoinGecko id, no symbol — <i>and</i> it is not a wrapped, staked
+        or bridged product of a token that already trades. Excluded: Bridge, Canonical
+        Bridge and Cross Chain Bridge products, Liquid Staking, Liquid Restaking and
+        Restaked BTC, exchanges, names ending in a version marker, and names carrying
+        the whole word wrapped, staked or staking. That is why WBTC, Binance staked ETH
+        and Coinbase Bridge are not here: they are Bitcoin and ETH in another form, not
+        protocols waiting on a launch of their own.</p>
+      </div>
+      <div>
+        <h3>What “records no token” means</h3>
+        <p>The snapshot records what DefiLlama lists. A row on this board records no token
+        in that snapshot — that is not proof the protocol has none, and it is not a promise
+        that it will ever launch one. Implied value is a model, not a price target and not
+        financial advice. Farm plans are a checklist, not a guarantee of an airdrop.</p>
+      </div>
+      <div>
+        <h3>What is set aside</h3>
+        <p>The Live token tab lists the protocols that already trade, by market cap. They are
+        shown with the market's own values and never mixed into the ranking: a token that
+        already trades has no launch left to farm.</p>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <p>Source: DefiLlama protocol snapshot, sealed at the competition's start. Model radar-2.
+  Built by a program that reads the snapshot and nothing else — no prices fetched live,
+  no list of names written by hand.</p>
+</footer>
+<dialog id="detail" aria-label="Protocol detail">
+  <form method="dialog"><button class="close" aria-label="Close">✕</button></form>
+  <div id="detailBody"></div>
+</dialog>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
