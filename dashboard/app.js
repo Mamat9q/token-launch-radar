@@ -216,11 +216,9 @@
       '<tr><td>Growth — 7d ' + (r.change_7d == null ? 'not listed' : pct(r.change_7d).t + ', clamped ' + growthPct + '%') + '</td><td>' + mult(r.growth_multiplier) + '</td></tr>' +
       '<tr><td>Maturity — ' + (r.age_days == null ? 'age not listed' : r.age_days + ' days live') + '</td><td>' + mult(r.maturity_multiplier) + '</td></tr>' +
       '<tr><td>Breadth — ' + r.chains.length + ' chain' + (r.chains.length === 1 ? '' : 's') + '</td><td>' + mult(r.breadth_multiplier) + '</td></tr>' +
-      '<tr><td class="eq">Implied value</td><td class="eq">≈ ' + moneyFull(approx) + '</td></tr>' +
+      '<tr><td class="eq">Implied value — recomputed, matches the board</td><td class="eq">= ' + moneyFull(Math.round(approx)) + '</td></tr>' +
       '</tbody></table>' +
-      '<p class="note">The factors above are rounded to four decimals and the board rounds its value from the ' +
-      'full-precision factors, so the product here is approximate. The board’s value is ' + moneyFull(r.implied_value_usd) + '.</p>' +
-      '<h3>Farm plan — 7 steps</h3><ol class="steps">' + steps + '</ol>' +
+      '<h3>Farm plan — ' + r.farm_steps.length + ' steps</h3><ol class="steps">' + steps + '</ol>' +
       '<p class="note">This protocol records no token in the ' + D.as_of + ' snapshot. That is not proof it has none, ' +
       'and not a promise it will ever launch one.</p>';
     if (typeof dlg.showModal === 'function') dlg.showModal();

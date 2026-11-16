@@ -17,7 +17,7 @@ node main.ts --input <snapshot-dir> --output <out-dir>
 `data.js`, a copy of `dashboard/`, a copy of `screenshots/` and `dossier.json`,
 then refuses the run if its own checks fail. Two runs write identical bytes.
 
-## The model — radar-2
+## The model — radar-3
 
 A protocol is rankable when its record carries no token (`mcap_usd`,
 `gecko_id` and `symbol` all null) **and** it passes the watchlist's own
@@ -58,13 +58,15 @@ it has none.
 
 ## Farm plans
 
-Seven steps per protocol, derived from its own record (category, chains, TVL,
+Eight steps per protocol, derived from its own record (category, chains, TVL,
 age): a fresh wallet, the category action with a capital tier ($250 ≥ $5B,
 $150 ≥ $1B, $100 ≥ $100M, else $50), one qualifying action a week, a hold
 (60 days if younger than 180 days, 45 if younger than a year, else 30), a
 check of the protocol's own points page, a risk check (domain, contract,
-health limits, revoke unused approvals), and a farm log. Every step states
-its cost and time.
+health limits, revoke unused approvals), a farm log, and an exit step —
+unwind when the token launches, the points window closes, or TVL falls by a
+third. Every step states its cost and time. The detail view recomputes the
+implied value from the full-precision factors and matches the board exactly.
 
 ## Layout
 

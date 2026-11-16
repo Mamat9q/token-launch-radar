@@ -94,25 +94,25 @@ footer p{max-width:1180px;margin:0 auto}
 
 /* detail dialog */
 dialog{background:var(--surface);color:var(--ink);border:1px solid var(--line2);border-radius:14px;
-  max-width:640px;width:calc(100vw - 48px);padding:0}
+  max-width:640px;width:calc(100vw - 48px);padding:0;max-height:calc(100vh - 32px);overflow:auto}
 dialog::backdrop{background:rgba(4,8,6,.72)}
 dialog .close{position:absolute;top:12px;right:12px;background:none;border:1px solid var(--line2);color:var(--muted);
   border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:14px}
 dialog .close:hover{color:var(--ink);border-color:var(--green)}
-#detailBody{padding:24px 26px}
-#detailBody h2{font-size:22px;margin:0 0 4px;padding-right:36px}
-#detailBody .sub{color:var(--muted);font-size:13px;margin:0 0 16px}
-#detailBody .big{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--green)}
-#detailBody .biglbl{color:var(--muted);font-size:12.5px;margin-bottom:16px}
-.factors{width:100%;border-collapse:collapse;font-size:13.5px;margin:0 0 6px}
-.factors td{padding:7px 0;border-bottom:1px solid var(--line)}
+#detailBody{padding:18px 24px 20px}
+#detailBody h2{font-size:20px;margin:0 0 2px;padding-right:36px}
+#detailBody .sub{color:var(--muted);font-size:13px;margin:0 0 10px}
+#detailBody .big{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--green)}
+#detailBody .biglbl{color:var(--muted);font-size:12.5px;margin-bottom:10px}
+.factors{width:100%;border-collapse:collapse;font-size:13px;margin:0 0 4px}
+.factors td{padding:5px 0;border-bottom:1px solid var(--line)}
 .factors td:last-child{font-family:var(--mono);text-align:right}
 .factors tr:last-child td{border-bottom:0;font-weight:700}
 .factors .eq{color:var(--green)}
-#detailBody .note{color:var(--faint);font-size:12px;margin:0 0 18px}
-#detailBody h3{margin-top:6px}
+#detailBody .note{color:var(--faint);font-size:12px;margin:0 0 12px}
+#detailBody h3{margin-top:4px}
 .steps{list-style:none;margin:0;padding:0;counter-reset:step}
-.steps li{counter-increment:step;position:relative;padding:0 0 12px 34px;color:#c4d3c9}
+.steps li{counter-increment:step;position:relative;padding:0 0 6px 34px;color:#c4d3c9;font-size:13px;line-height:1.35}
 .steps li::before{content:counter(step);position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;
   background:rgba(47,212,138,.16);color:var(--green);font:700 12px/22px var(--mono);text-align:center}
 .steps .cost{color:var(--muted);font-size:12.5px}

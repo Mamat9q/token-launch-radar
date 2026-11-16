@@ -1,4 +1,4 @@
-// Token Radar's model (radar-2): one sealed snapshot in, one ranked board out.
+// Token Radar's model (radar-3): one sealed snapshot in, one ranked board out.
 //
 // The board ranks every protocol that passes the watchlist's own no-token rule,
 // applied to the whole snapshot rather than only to the watchlist floor. A
@@ -81,7 +81,7 @@ export const MODEL: ModelConstants = {
 };
 
 /** The model's version label: the dashboard names it and the README quotes it. */
-export const MODEL_VERSION = 'radar-2';
+export const MODEL_VERSION = 'radar-3';
 
 /** How many live-token protocols the Live token view carries, by market cap. */
 export const LIVE_ROWS = 24;
@@ -277,16 +277,14 @@ export function buildBoard(snapshot: Snapshot, model: ModelConstants = MODEL): B
     model: {
       base_multiple: model.base_multiple,
       growth_pct: s.v.growthPct,
-      growth_multiplier: round4(s.v.growthMult),
-      maturity_multiplier: round4(s.v.maturityMult),
-      breadth_multiplier: round4(s.v.breadthMult),
+      growth_multiplier: s.v.growthMult,
+      maturity_multiplier: s.v.maturityMult,
+      breadth_multiplier: s.v.breadthMult,
       age_days: s.v.age,
     },
     farm_steps: farmSteps(s.p, s.v.age).map(stepText),
   }));
 }
-
-const round4 = (n: number): number => Math.round(n * 1e4) / 1e4;
 
 /** A step as one string: its action, then its cost and time, within the gate's 20..600 characters. */
 export function stepText(step: FarmStep): string {
@@ -363,9 +361,10 @@ function actionFor(p: SnapshotProtocol, capital: number, chain: string): string 
 }
 
 /**
- * A protocol's farm plan: seven steps, each an action with a cost and a time.
+ * A protocol's farm plan: eight steps, each an action with a cost and a time.
  * The plan is derived from the protocol's own record (category, chains, TVL,
- * age), never from a hand-written list of names.
+ * age), never from a hand-written list of names. The eighth step is the exit:
+ * a farm without a way out is a position you cannot close.
  */
 export function farmSteps(p: SnapshotProtocol, age: number | null): FarmStep[] {
   const chain = chainOf(p);
@@ -407,6 +406,11 @@ export function farmSteps(p: SnapshotProtocol, age: number | null): FarmStep[] {
       text: `Write the wallet, the dates and every transaction in a farm log so you can repeat the position or unwind it.`,
       cost: 'nothing but the log',
       time: '5 minutes',
+    },
+    {
+      text: `Unwind the position when the token launches, the points window closes, or TVL falls by a third — withdraw to the fresh wallet and revoke the approvals you no longer use.`,
+      cost: 'about $4 of gas to exit',
+      time: '10 minutes to unwind',
     },
   ];
 }

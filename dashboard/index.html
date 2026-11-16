@@ -19,7 +19,7 @@
     bridged product of a token that already trades. Each is ranked by its implied value:
     a quarter of its TVL, adjusted for how fast it is growing, how long it has been live,
     and how many chains it reaches. The farm plan under each row says what to do, what it
-    costs, and how long it takes.</p>
+    costs, and how long it takes — and when to get out.</p>
     <div class="stats" id="stats"></div>
   </section>
 
@@ -71,7 +71,7 @@
     <h2>How the radar works</h2>
     <div class="method-grid">
       <div>
-        <h3>The value model — radar-2</h3>
+        <h3>The value model — radar-3</h3>
         <p class="formula">implied = TVL × 0.25 × (1 + clamp(7d, −60, +120) ÷ 100 × 0.5) × (0.6 + min(age, 1095) ÷ 1095 × 0.4) × (1 + 0.02 × min(chains, 5))</p>
         <p>Four figures, all from the snapshot. A quarter of TVL is the base: that is the
         size of the protocol that would have to be rewarded. Growth adds up to +60% or
@@ -108,7 +108,7 @@
   </section>
 </main>
 <footer>
-  <p>Source: DefiLlama protocol snapshot, sealed at the competition's start. Model radar-2.
+  <p>Source: DefiLlama protocol snapshot, sealed at the competition's start. Model radar-3.
   Built by a program that reads the snapshot and nothing else — no prices fetched live,
   no list of names written by hand.</p>
 </footer>
